@@ -17,8 +17,9 @@ body{
  border-radius:24px;padding:46px 40px 42px;
  box-shadow:0 40px 80px rgba(0,0,0,.35);
 }
-.header{text-align:center;margin-bottom:24px}
-h1{font-size:22px;margin:10px 0 0}
+.header{text-align:center;margin-bottom:20px}
+.logo{width:90px;display:block;margin:0 auto 10px}
+h1{font-size:22px;margin:0}
 
 .field{margin-top:14px}
 label{font-size:13px;color:#445}
@@ -30,21 +31,14 @@ input{
 input:focus{border-color:#3b6cff}
 
 .glass-btn{
- position:relative;overflow:hidden;
  margin-top:22px;width:100%;padding:16px;font-size:16px;font-weight:700;color:white;
  border-radius:14px;border:none;cursor:pointer;
  background:linear-gradient(120deg,#3b6cff,#6fb7ff,#3b6cff);
  background-size:200% 200%;
  animation:glowMove 4s ease infinite;
  box-shadow:0 12px 30px rgba(59,108,255,.45);
- transition:.35s
 }
-.glass-btn:hover{transform:translateY(-2px) scale(1.02)}
-
-.notice{
- margin-top:10px;font-size:12px;color:#667;text-align:center;line-height:1.4
-}
-
+.notice{margin-top:10px;font-size:12px;color:#667;text-align:center;line-height:1.4}
 @keyframes glowMove{
 0%{background-position:0% 50%}
 50%{background-position:100% 50%}
@@ -55,6 +49,7 @@ input:focus{border-color:#3b6cff}
 <body>
 <div class="panel">
  <div class="header">
+  <img src="logo.png" class="logo">
   <h1>계남고등학교 학생회 합격조회 시스템</h1>
  </div>
 
