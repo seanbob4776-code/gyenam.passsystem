@@ -6,89 +6,43 @@
 <title>합격 조회 결과</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;font-family:'Noto Sans KR',sans-serif;
- background:radial-gradient(circle at top,#1b2b45,#0b1220);
- min-height:100vh;display:flex;justify-content:center;align-items:center
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#f5f5f5}
+.panel{padding:30px}
+.cert{
+ width:210mm;
+ height:297mm;
+ margin:20px auto;
+ padding:40mm 25mm;
+ border:2px solid #165F9C;
+ position:relative;
+ background:white;
 }
-.panel{
- width:640px;background:#fff;border-radius:24px;
- padding:40px;box-shadow:0 40px 80px rgba(0,0,0,.35);
+.cert h1{text-align:center;font-size:26px;margin-bottom:30px}
+.cert table{width:100%;border-collapse:collapse;margin-top:20px}
+.cert td{border-bottom:1px solid #aaa;padding:8px}
+.cert .content-text{margin-top:40px;font-size:16px;line-height:1.8}
+.cert .sign{position:absolute;right:40mm;bottom:45mm;text-align:right}
+.cert .stamp{
+ position:absolute;
+ right:30mm;
+ bottom:25mm;
+ width:35mm;
+ opacity:0.9;
 }
-.header{text-align:center}
-.logo{width:80px;margin-bottom:10px}
-
-@keyframes flow{to{background-position:200% center}}
-
-.flow-blue{
- background:linear-gradient(90deg,#3b6cff,#6fb7ff,#3b6cff);
- background-size:200% auto;
- -webkit-background-clip:text;
- color:transparent;
- animation:flow 2s linear infinite;
- font-weight:800;
-}
-
-.flow-red{
- background:linear-gradient(90deg,#ff4d4d,#ff9a9a,#ff4d4d);
- background-size:200% auto;
- -webkit-background-clip:text;
- color:transparent;
- animation:flow 2s linear infinite;
- font-weight:800;
-}
-
-.congrats{text-align:center;font-size:34px}
-.sub{text-align:center;font-size:18px;margin-bottom:15px}
-
-.video-box{margin:15px 0}
-.video-box video{width:100%;border-radius:12px}
-.video-notice{font-size:12px;color:#666;text-align:center;margin-bottom:10px}
-
-table{width:100%;border-collapse:collapse}
-td{padding:10px;border-bottom:1px solid #eee}
-
-.btn-row{display:flex;gap:10px;margin-top:20px}
-.glass-btn{
- flex:1;padding:14px;font-weight:700;color:white;
- border:none;border-radius:12px;cursor:pointer;
- background:linear-gradient(120deg,#3b6cff,#6fb7ff,#3b6cff);
- background-size:200% 200%;
- animation:flow 4s infinite;
-}
-.print-note{font-size:12px;text-align:center;margin-top:8px;color:#666}
-
-.cert{display:none}
-
 @media print{
- body{background:white}
+ body{margin:0}
  .panel>*:not(.cert){display:none}
- .cert{display:block;border:2px solid #165F9C;padding:40px}
- .cert h2{text-align:center;margin-bottom:30px}
- .sign{text-align:right;margin-top:60px}
- .stamp{width:120px;position:absolute;right:60px;bottom:80px;opacity:0.85}
 }
 </style>
 </head>
 <body>
 <div class="panel">
-<div class="header">
-<img src="logo.png" class="logo">
-<h1>계남고등학교 학생회 합격조회 시스템</h1>
-</div>
-
-<div id="content"></div>
-<div class="btn-row" id="buttons"></div>
-<div class="print-note" id="printNote"></div>
 <div class="cert" id="certificate"></div>
-
 </div>
-
 <script>
 const DATA={
  "10714":{name:"오제영",birth:"090320",track:"학생회도우미",unit:"언론홍보부",pos:"도우미",result:"pass"},
- "10715":{name:"이재하",birth:"090824",track:"학생회도우미",unit:"특별활동부",pos:"도우미",result:"fail"},
+ "10715":{name:"이재하",birth:"090824",track:"학생회도우미",unit:"언론홍보부",pos:"도우미",result:"fail"},
  "10716":{name:"정소윤",birth:"080101",track:"학생회도우미",unit:"기획재정부",pos:"도우미",result:"pass"},
  "10717":{name:"이예준",birth:"080102",track:"학생회도우미",unit:"문화체육부",pos:"도우미",result:"pass"},
  "10718":{name:"정주연",birth:"080103",track:"학생회도우미",unit:"교육기획부",pos:"도우미",result:"pass"}
@@ -99,71 +53,30 @@ const sid=p.get("sid");
 const birth=p.get("birth");
 const name=p.get("name");
 
-if(!DATA[sid]||DATA[sid].birth!==birth||DATA[sid].name!==name){
- alert("지원자가 아니거나, 입력정보가 잘못되었습니다.");
- location.href="index.html";
-}else{
-
+if(DATA[sid] && DATA[sid].birth===birth && DATA[sid].name===name && DATA[sid].result==="pass"){
  const d=DATA[sid];
- const content=document.getElementById("content");
- const buttons=document.getElementById("buttons");
- const cert=document.getElementById("certificate");
- const printNote=document.getElementById("printNote");
-
- let resultText = d.result==="pass"
-   ? '<span class="flow-blue">합격</span>'
-   : '<span class="flow-red">불합격</span>';
-
- if(d.result==="pass"){
-  content.innerHTML=`
-  <div class="congrats flow-blue">축하합니다.</div>
-  <div class="sub">최종 합격하셨습니다.</div>
-  <div class="video-box">
-   <video src="congrats.mp4" autoplay loop muted playsinline id="video"></video>
-  </div>
-  <div class="video-notice">아무 곳이나 터치하면 합격 축하영상과 소리가 자동 재생됩니다.</div>
-  <table>
-   <tr><td>이름</td><td>${d.name}</td></tr>
-   <tr><td>학번</td><td>${sid}</td></tr>
-   <tr><td>지원분야</td><td>${d.track}</td></tr>
-   <tr><td>모집단위</td><td>${d.unit}</td></tr>
-   <tr><td>직위</td><td>${d.pos}</td></tr>
-   <tr><td>모집결과</td><td>${resultText}</td></tr>
-  </table>`;
-
-  buttons.innerHTML=`
-   <button class="glass-btn" onclick="window.print()">합격통지서 인쇄</button>
-   <button class="glass-btn" onclick="location.href='index.html'">다시 조회하기</button>`;
-  printNote.innerHTML="합격통지서 인쇄는 PC에서 가능합니다.";
-
-  cert.innerHTML=`
-    <h2>계남고등학교 제31대 학생회 도우미 합격통지서</h2>
-    <p>위 사람은 계남고등학교 제31대 학생회 도우미 선발에 합격하였음을 통지합니다.</p>
-    <div class="sign">
-    계남고등학교<br>전교회장 정소윤
-    </div>
-    <img src="stamp.png" class="stamp">`;
-
-  document.body.addEventListener("click",function(){
-   const v=document.getElementById("video");
-   if(v){v.muted=false;v.play();}
-  },{once:true});
-
- }else{
-
-  content.innerHTML=`
-  <table>
-   <tr><td>이름</td><td>${d.name}</td></tr>
-   <tr><td>학번</td><td>${sid}</td></tr>
-   <tr><td>지원분야</td><td>${d.track}</td></tr>
-   <tr><td>모집단위</td><td>${d.unit}</td></tr>
-   <tr><td>직위</td><td>${d.pos}</td></tr>
-   <tr><td>모집결과</td><td>${resultText}</td></tr>
-  </table>`;
-
-  buttons.innerHTML=`
-   <button class="glass-btn" onclick="location.href='index.html'">다시 조회하기</button>`;
- }
+ document.getElementById("certificate").innerHTML=`
+   <h1>계남고등학교 제31대 학생회 도우미 합격통지서</h1>
+   <table>
+     <tr><td>성명</td><td>${d.name}</td></tr>
+     <tr><td>학번</td><td>${sid}</td></tr>
+     <tr><td>생년월일</td><td>${d.birth}</td></tr>
+     <tr><td>지원분야</td><td>${d.track}</td></tr>
+     <tr><td>모집단위</td><td>${d.unit}</td></tr>
+     <tr><td>직위</td><td>${d.pos}</td></tr>
+   </table>
+   <div class="content-text">
+     위 사람은 계남고등학교 제31대 학생회 도우미 선발에<br>
+     최종 합격하였음을 통지합니다.
+   </div>
+   <div class="sign">
+     계남고등학교<br>
+     전교회장 정소윤
+   </div>
+   <img src="stamp.png" class="stamp">
+ `;
+}else{
+ document.body.innerHTML="<h2 style='text-align:center;margin-top:100px;'>합격자가 아닙니다.</h2>";
 }
 </script>
 </body>
