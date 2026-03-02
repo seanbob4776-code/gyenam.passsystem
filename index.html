@@ -35,15 +35,11 @@ input:focus{border-color:#3b6cff}
  border-radius:14px;border:none;cursor:pointer;
  background:linear-gradient(120deg,#3b6cff,#6fb7ff,#3b6cff);
  background-size:200% 200%;
- animation:glowMove 4s ease infinite;
+ animation:flow 4s infinite;
  box-shadow:0 12px 30px rgba(59,108,255,.45);
 }
 .notice{margin-top:10px;font-size:12px;color:#667;text-align:center;line-height:1.4}
-@keyframes glowMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
+@keyframes flow{to{background-position:200% center}}
 </style>
 </head>
 <body>
