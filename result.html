@@ -61,10 +61,16 @@ td{padding:10px;border-bottom:1px solid #eee}
 
 .cert{display:none}
 
+@page{
+  margin:0;
+}
+
 @media print{
-  body{
-    background:white;
+  html, body{
+    width:210mm;
+    height:297mm;
     margin:0;
+    background:white;
   }
 
   .panel{
@@ -80,10 +86,10 @@ td{padding:10px;border-bottom:1px solid #eee}
 
   .cert{
     display:block;
-    width:210mm;
-    height:297mm;
-    margin:0 auto;
-    padding:40mm 25mm;
+    width:170mm;
+    height:257mm;
+    margin:20mm auto;
+    padding:25mm;
     border:2px solid #165F9C;
     position:relative;
     box-shadow:none;
@@ -114,9 +120,9 @@ td{padding:10px;border-bottom:1px solid #eee}
 
   .cert .sign{
     position:absolute;
-    right:40mm;
-    bottom:45mm;
-    text-align:right;
+    left:30mm;
+    bottom:30mm;
+    text-align:left;
   }
 
   .cert .stamp{
@@ -124,9 +130,10 @@ td{padding:10px;border-bottom:1px solid #eee}
     right:30mm;
     bottom:25mm;
     width:35mm;
-    opacity:0.9;
+    opacity:0.95;
   }
 }
+
 
 </style>
 </head>
