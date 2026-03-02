@@ -13,257 +13,124 @@ body{
  min-height:100vh;display:flex;justify-content:center;align-items:center
 }
 .panel{
- width:560px;background:linear-gradient(180deg,#fff,#f3f6fb);
- border-radius:24px;padding:44px 40px 42px;
- box-shadow:0 40px 80px rgba(0,0,0,.35);
- position:relative;
+ width:600px;background:#fff;border-radius:24px;
+ padding:40px;box-shadow:0 40px 80px rgba(0,0,0,.35);
 }
-.header{text-align:center;margin-bottom:14px}
-.logo{width:80px}
-h1{font-size:22px;margin:10px 0 0}
 
-.congrats-wrap{text-align:center;margin:10px 0 18px}
-.congrats-main{
- font-size:34px;font-weight:800;
+h1{text-align:center;margin-bottom:20px}
+
+.congrats{
+ text-align:center;font-size:32px;font-weight:800;
  background:linear-gradient(90deg,#3b6cff,#6fb7ff,#3b6cff);
- background-size:200% auto;
- color:transparent;
- -webkit-background-clip:text;
+ -webkit-background-clip:text;color:transparent;
  animation:flow 2s linear infinite;
 }
-.congrats-sub{
- margin-top:6px;font-size:18px;font-weight:600;color:#1f2d4d;line-height:1.4
-}
 
-.video-box{
- width:100%;margin:16px 0 4px;
- border-radius:14px;overflow:hidden;
- box-shadow:0 12px 30px rgba(0,0,0,.25)
-}
-.video-box video{width:100%;display:block}
+.sub{text-align:center;margin-bottom:20px;font-size:18px}
 
-.video-notice{
- text-align:center;
- font-size:12px;
- color:#667;
- margin-bottom:10px
-}
-
-table{width:100%;border-collapse:collapse;margin-top:10px}
-td{padding:12px 8px;border-bottom:1px solid #e0e4ef}
-td:first-child{color:#555;width:35%}
-
-.result-pass{
- font-weight:800;
- background:linear-gradient(90deg,#3b6cff,#6fb7ff,#3b6cff);
- background-size:200% auto;
- color:transparent;
- -webkit-background-clip:text;
- animation:flow 2s linear infinite;
-}
-.result-fail{
- font-weight:800;
- background:linear-gradient(90deg,#ff4d4d,#ff9a9a,#ff4d4d);
- background-size:200% auto;
- color:transparent;
- -webkit-background-clip:text;
- animation:flow 2s linear infinite;
-}
 @keyframes flow{to{background-position:200% center}}
 
-/* Buttons */
-.btn-row{
- display:flex;gap:12px;margin-top:22px;flex-wrap:wrap
-}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+td{padding:10px;border-bottom:1px solid #eee}
+
+.btn-row{display:flex;gap:10px;margin-top:20px}
 .glass-btn{
- position:relative;overflow:hidden;
- padding:15px 0;font-size:15px;font-weight:700;color:white;
- border-radius:14px;border:none;cursor:pointer;
+ flex:1;padding:14px;font-weight:700;color:white;
+ border:none;border-radius:12px;cursor:pointer;
  background:linear-gradient(120deg,#3b6cff,#6fb7ff,#3b6cff);
  background-size:200% 200%;
- animation:glowMove 4s ease infinite;
- box-shadow:0 12px 30px rgba(59,108,255,.45);
- transition:.35s;flex:1
-}
-.full{width:100%}
-.glass-btn::before{
- content:"";position:absolute; inset:0;
- background:linear-gradient(60deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.35) 50%,rgba(255,255,255,0) 70%);
- animation:shine 5s linear infinite;
-}
-.glass-btn:hover{transform:translateY(-2px) scale(1.02);animation-duration:1.5s}
-
-.print-notice{
- width:100%;
- text-align:center;
- font-size:12px;
- color:#667;
- margin-top:8px
+ animation:flow 4s infinite;
 }
 
-/* hide cert on screen */
-.cert{display:none}
+.print-area{display:none}
 
-/* ===== PRINT LAYOUT ===== */
-@page{size:A4;margin:18mm}
 @media print{
  body{background:white}
- .header,.congrats-wrap,.video-box,.video-notice,#table,.btn-row,.print-notice{display:none !important}
- .panel{box-shadow:none;width:100%;padding:0}
-
- .cert{
-  display:block !important;
-  border:1.5px solid #165F9C;
-  padding:35px 40px 50px;
- }
-
- .cert h2{text-align:center;font-size:26px;margin:10px 0 25px}
-
- .cert table td{
-  border-bottom:1px solid #aaa;
-  font-size:16px;
-  padding:14px 8px;
- }
-
- .cert-text{margin-top:28px;font-size:18px;line-height:1.8}
-
- .sign-wrap{
-  margin-top:60px;
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  gap:20px;
- }
-
- .sign-text{text-align:right;font-size:17px;line-height:1.6}
-
- .stamp{width:140px;opacity:.85}
- .print-logo{width:90px;display:block;margin:0 auto 10px}
+ .panel>*:not(.print-area){display:none}
+ .print-area{display:block}
 }
 </style>
 </head>
 <body>
 <div class="panel">
- <div class="header">
-  <img src="logo.png" class="logo">
-  <h1>계남고등학교 제32대 학생회<br>합격자 조회 결과</h1>
- </div>
+<h1>계남고등학교 학생회 합격조회 시스템</h1>
 
- <div class="congrats-wrap" id="congratsWrap" style="display:none">
-   <div class="congrats-main">축하합니다.</div>
-   <div class="congrats-sub">
-     계남고등학교 제32대 학생회에<br>
-     최종 합격하셨습니다.
-   </div>
- </div>
+<div id="resultArea"></div>
 
- <div class="video-box" id="videoBox" style="display:none">
-   <video id="congratsVideo" src="congrats.mp4" autoplay loop muted playsinline></video>
- </div>
- <div class="video-notice" id="videoNotice" style="display:none">
-   아무 곳이나 터치하면 합격 축하영상과 소리가 자동 재생됩니다.
- </div>
+<div class="btn-row" id="btnRow"></div>
 
- <table id="table"></table>
-
- <div class="btn-row" id="btnRow"></div>
- <div class="print-notice" id="printNotice" style="display:none">
-  합격통지서 인쇄는 PC에서 가능합니다.
- </div>
-
- <!-- ===== PRINT CERTIFICATE ===== -->
- <div class="cert" id="cert">
-   <img src="logo.png" class="print-logo">
-   <h2>계남고등학교 제32대 학생회 합격통지서</h2>
-   <table id="certTable"></table>
-
-   <div class="cert-text">
-     위 사람은 계남고등학교 제32대 학생회 선발에<br>
-     합격하였음을 통지합니다.
-   </div>
-
-   <div class="sign-wrap">
-     <div class="sign-text">
-       계남고등학교<br>
-       학생회장 오제영
-     </div>
-     <img src="stamp.png" class="stamp">
-   </div>
- </div>
+<div class="print-area" id="printArea"></div>
 </div>
 
 <script>
 const DATA={
- "10714":{name:"오제영",birth:"090320",track:"콘텐츠문화계열",unit:"언론홍보부",pos:"부장",result:"pass"},
- "10715":{name:"홍길동",birth:"090420",track:"콘텐츠문화계열",result:"fail"},
- "10716":{name:"이재하",birth:"090714",track:"기획행정계열",result:"fail"},
- "10717":{name:"최선우",birth:"090812",track:"콘텐츠문화계열",unit:"특별활동부",pos:"차장",result:"pass"},
- "10718":{name:"오승진",birth:"090320",track:"기획행정계열",unit:"기획재정부",pos:"부원",result:"pass"}
+ "10714":{name:"오제영",birth:"090320",track:"학생회도우미(특수)",unit:"언론홍보부",pos:"도우미",result:"pass"},
+ "10715":{name:"이재하",birth:"090824",track:"학생회도우미(특수)",unit:"언론홍보부",pos:"도우미",result:"fail"},
+ "10716":{name:"정소윤",birth:"080101",track:"학생회도우미(특수)",unit:"기획재정부",pos:"도우미",result:"pass"},
+ "10717":{name:"이예준",birth:"080102",track:"학생회도우미(특수)",unit:"문화체육부",pos:"도우미",result:"pass"},
+ "10718":{name:"정주연",birth:"080103",track:"학생회도우미(특수)",unit:"교육기획부",pos:"도우미",result:"pass"}
 };
 
 const p=new URLSearchParams(location.search);
 const sid=p.get("sid");
 const birth=p.get("birth");
 const name=p.get("name");
-const t=document.getElementById("table");
-const certTable=document.getElementById("certTable");
-const btnRow=document.getElementById("btnRow");
-const video=document.getElementById("congratsVideo");
 
 if(!DATA[sid]||DATA[sid].birth!==birth||DATA[sid].name!==name){
  alert("지원자가 아니거나, 입력정보가 잘못되었습니다.");
  location.href="index.html";
 }else{
+
  const d=DATA[sid];
- function row(a,b){return `<tr><td>${a}</td><td>${b}</td></tr>`}
- let html="";
- html+=row("이름",d.name);
- html+=row("학번",sid);
- html+=row("생년월일",birth);
- html+=row("지원분야",d.track);
+ const resultArea=document.getElementById("resultArea");
+ const btnRow=document.getElementById("btnRow");
+ const printArea=document.getElementById("printArea");
 
  if(d.result==="pass"){
-  document.getElementById("congratsWrap").style.display="block";
-  document.getElementById("videoBox").style.display="block";
-  document.getElementById("videoNotice").style.display="block";
-  document.getElementById("printNotice").style.display="block";
+   resultArea.innerHTML=`
+   <div class="congrats">축하합니다.</div>
+   <div class="sub">최종 합격하셨습니다.</div>
+   <table>
+   <tr><td>이름</td><td>${d.name}</td></tr>
+   <tr><td>학번</td><td>${sid}</td></tr>
+   <tr><td>지원분야</td><td>${d.track}</td></tr>
+   <tr><td>모집단위</td><td>${d.unit}</td></tr>
+   <tr><td>직위</td><td>${d.pos}</td></tr>
+   </table>`;
 
-  html+=row("모집단위",d.unit);
-  html+=row("직위",d.pos);
-  html+=row("결과",'<span class="result-pass">합격</span>');
+   btnRow.innerHTML=`
+   <button class="glass-btn" onclick="window.print()">합격통지서 인쇄</button>
+   <button class="glass-btn" onclick="location.href='index.html'">다시 조회하기</button>
+   `;
 
-  btnRow.innerHTML = `
-    <button class="glass-btn" onclick="window.print()">합격통지서 인쇄</button>
-    <button class="glass-btn" onclick="location.href='index.html'">다시 조회하기</button>
-  `;
-
-  document.body.addEventListener("click",()=>{
-    if(video.muted){
-      video.muted=false;
-      video.play();
-    }
-  },{once:true});
+   if(d.track==="학생회도우미(특수)"){
+     printArea.innerHTML=`
+     <h2>계남고등학교 제31대 학생회 도우미 합격통지서</h2>
+     <p>위 사람은 계남고등학교 제31대 학생회 도우미 선발에 합격하였음을 통지합니다.</p>
+     <p style="margin-top:60px;text-align:right;">
+     계남고등학교<br>전교회장 정소윤
+     </p>`;
+   }else{
+     printArea.innerHTML=`
+     <h2>계남고등학교 학생회 합격통지서</h2>
+     <p>위 사람은 계남고등학교 학생회 선발에 합격하였음을 통지합니다.</p>`;
+   }
 
  }else{
-  html+=row("결과",'<span class="result-fail">불합격</span>');
 
-  btnRow.innerHTML = `
-    <button class="glass-btn full" onclick="location.href='index.html'">다시 조회하기</button>
-  `;
+   resultArea.innerHTML=`
+   <table>
+   <tr><td>이름</td><td>${d.name}</td></tr>
+   <tr><td>학번</td><td>${sid}</td></tr>
+   <tr><td>지원분야</td><td>${d.track}</td></tr>
+   <tr><td>결과</td><td>불합격</td></tr>
+   </table>`;
+
+   btnRow.innerHTML=`
+   <button class="glass-btn" onclick="location.href='index.html'">다시 조회하기</button>
+   `;
  }
 
- t.innerHTML=html;
-
- let chtml="";
- chtml+=row("성명",d.name);
- chtml+=row("학번",sid);
- chtml+=row("생년월일",birth);
- chtml+=row("지원분야",d.track);
- if(d.result==="pass"){
-  chtml+=row("모집단위",d.unit);
-  chtml+=row("직위",d.pos);
- }
- certTable.innerHTML=chtml;
 }
 </script>
 </body>

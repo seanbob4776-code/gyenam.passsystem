@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>계남고 학생회 합격자 조회</title>
+<title>계남고등학교 학생회 합격조회 시스템</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
@@ -18,13 +18,12 @@ body{
  box-shadow:0 40px 80px rgba(0,0,0,.35);
 }
 .header{text-align:center;margin-bottom:24px}
-.logo{width:90px}
 h1{font-size:22px;margin:10px 0 0}
 
 .field{margin-top:14px}
 label{font-size:13px;color:#445}
 input{
- width:100%;padding:14px 14px;margin-top:6px;
+ width:100%;padding:14px;margin-top:6px;
  border-radius:12px;border:1px solid #ccd3e2;
  font-size:15px;outline:none
 }
@@ -40,35 +39,28 @@ input:focus{border-color:#3b6cff}
  box-shadow:0 12px 30px rgba(59,108,255,.45);
  transition:.35s
 }
-.glass-btn::before{
- content:"";position:absolute; inset:0;
- background:linear-gradient(60deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.35) 50%,rgba(255,255,255,0) 70%);
- animation:shine 5s linear infinite;
-}
-.glass-btn:hover{transform:translateY(-2px) scale(1.02);animation-duration:1.5s}
+.glass-btn:hover{transform:translateY(-2px) scale(1.02)}
 
 .notice{
- margin-top:10px;
- font-size:12px;
- color:#667;
- text-align:center;
- line-height:1.4
+ margin-top:10px;font-size:12px;color:#667;text-align:center;line-height:1.4
 }
 
-@keyframes glowMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes shine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@keyframes glowMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
 </style>
 </head>
 <body>
 <div class="panel">
  <div class="header">
-  <img src="logo.png" class="logo">
-  <h1>계남고등학교 제32대 학생회<br>합격자 조회</h1>
+  <h1>계남고등학교 학생회 합격조회 시스템</h1>
  </div>
 
  <div class="field">
   <label>이름</label>
-  <input id="name" placeholder="이름 입력">
+  <input id="name">
  </div>
 
  <div class="field">
@@ -94,6 +86,7 @@ function go(){
  const name=document.getElementById("name").value.trim();
  const sid=document.getElementById("sid").value.trim();
  const birth=document.getElementById("birth").value.trim();
+
  if(!name||sid.length!==5||birth.length!==6){
    alert("이름, 학번(5자리), 생년월일(6자리)을 정확히 입력해주세요.");
    return;
